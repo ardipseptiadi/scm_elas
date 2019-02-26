@@ -1,3 +1,4 @@
 /protected/runtime/*
 /lainlain/*
 /assets/*
+/protected/config/env/*
