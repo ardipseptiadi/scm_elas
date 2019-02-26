@@ -9,7 +9,7 @@ return array(
 	'connectionString' => isset($ini['database']['conn_str'])
                 ? $ini['database']['conn_str']:"mysql:host=localhost;dbname=scm_elas",
 	'emulatePrepare' => true,
-	'username' => isset($ini['database']['user']) ? $ini['database']['user'] :'root'
+	'username' => isset($ini['database']['user']) ? $ini['database']['user'] :'root',
 	'password' => isset($ini['database']['password']) ? $ini['database']['password'] :'',
 	'charset' => 'utf8',
 
