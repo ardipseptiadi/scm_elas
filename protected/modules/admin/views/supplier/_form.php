@@ -36,19 +36,11 @@
 	</div>
 
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'no_telpon',['class'=>'col-sm-2 control-label']); ?>
+		<?php echo $form->labelEx($model,'no_telp',['class'=>'col-sm-2 control-label']); ?>
 		<div class="col-sm-10">
-			<?php echo $form->textField($model,'no_telpon',array('size'=>15,'maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'no_telp',array('size'=>15,'maxlength'=>15)); ?>
 		</div>
-		<?php echo $form->error($model,'no_telpon'); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'kode_bank',['class'=>'col-sm-2 control-label']); ?>
-		<div class="col-sm-10">
-			<?php echo $form->textField($model,'kode_bank',array('size'=>5,'maxlength'=>5)); ?>
-		</div>
-		<?php echo $form->error($model,'kode_bank'); ?>
+		<?php echo $form->error($model,'no_telp'); ?>
 	</div>
 
 	<div class="form-actions center">

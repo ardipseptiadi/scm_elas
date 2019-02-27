@@ -7,7 +7,7 @@
  * @property integer $id_supplier
  * @property string $nama
  * @property string $alamat
- * @property string $no_telpon
+ * @property string $no_telp
  */
 class Supplier extends CActiveRecord
 {
@@ -30,10 +30,10 @@ class Supplier extends CActiveRecord
 		return array(
 			array('nama', 'required'),
 			array('nama, alamat', 'length', 'max'=>50),
-			array('no_telpon', 'length', 'max'=>15),
+			array('no_telp', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_supplier, nama, alamat, no_telpon', 'safe', 'on'=>'search'),
+			array('id_supplier, nama, alamat, no_telp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +45,7 @@ class Supplier extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idSupplierPart' => array(self::BELONGS_TO, 'SupplierPart', 'id_supplier'),
+			'idSupplierBahanBaku' => array(self::BELONGS_TO, 'SupplierBahanBaku', 'id_supplier'),
 		);
 	}
 
@@ -58,7 +58,7 @@ class Supplier extends CActiveRecord
 			'id_supplier' => 'Id Supplier',
 			'nama' => 'Nama',
 			'alamat' => 'Alamat',
-			'no_telpon' => 'No Telpon',
+			'no_telp' => 'No Telpon',
 		);
 	}
 
@@ -83,7 +83,7 @@ class Supplier extends CActiveRecord
 		$criteria->compare('id_supplier',$this->id_supplier);
 		$criteria->compare('nama',$this->nama,true);
 		$criteria->compare('alamat',$this->alamat,true);
-		$criteria->compare('no_telpon',$this->no_telpon,true);
+		$criteria->compare('no_telp',$this->no_telp,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
