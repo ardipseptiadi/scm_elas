@@ -19,7 +19,7 @@ class GroupId extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_group_id';
+		return 'el_group_id';
 	}
 
 	/**

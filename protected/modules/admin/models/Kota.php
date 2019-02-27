@@ -19,7 +19,7 @@ class Kota extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_kota';
+		return 'el_kota';
 	}
 
 	/**

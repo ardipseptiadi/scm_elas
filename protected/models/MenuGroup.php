@@ -16,7 +16,7 @@ class MenuGroup extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_menu_group';
+		return 'el_menu_group';
 	}
 
 	/**

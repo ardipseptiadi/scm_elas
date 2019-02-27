@@ -49,8 +49,8 @@ $this->breadcrumbs=array(
 				'dataProvider'=>$model->monthly(),
 				'columns'=>array(
 					array(
-						'header'=>'Nama Produk',
-						'name' => 'idProduk.nama',
+						'header'=>'Nama Bahan Baku',
+						'name' => 'idBahanBaku.nama',
 					),
 					array(
 						'header'=>'Bulan Peramalan',
@@ -63,7 +63,7 @@ $this->breadcrumbs=array(
 								$daten = new DateTime($bulanramal);
 								$daten->modify('-1 months');
 								$date_end = $daten->format('m-Y');
-								return $data->data_mulai.' - '.$date_end;
+								return $data->data_mulai.' Sampai '.$date_end;
 							}
 					),
 					array(
@@ -74,18 +74,18 @@ $this->breadcrumbs=array(
 					// 	'header' => 'Status',
 					// 	'value' => '$data->status()'
 					// ),
-					array(
-						'header'=>'Aksi',
-						'name'=>'aksi',
-						'value' => '
-							CHtml::link("Update",
-								array(
-									"peramalan/update",
-									"id"=>"$data->id_peramalan"
-								)
-							);',
-						'type' => 'raw',
-					),
+					// array(
+					// 	'header'=>'Aksi',
+					// 	'name'=>'aksi',
+					// 	'value' => '
+					// 		CHtml::link("Update",
+					// 			array(
+					// 				"peramalan/update",
+					// 				"id"=>"$data->id_peramalan"
+					// 			)
+					// 		);',
+					// 	'type' => 'raw',
+					// ),
 				),
 			));
 			?>

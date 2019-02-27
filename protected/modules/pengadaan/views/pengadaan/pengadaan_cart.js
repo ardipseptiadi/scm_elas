@@ -1,14 +1,14 @@
 $(document).on('click', ".addCart", function () {
-  var part_atr = $('#part');
+  var bahanbaku_atr = $('#bahanbaku');
   var qty_atr = $('#qty');
   var supplier_atr = $('#supplier');
   if(supplier_atr.val() == ''){
     alert("Supplier belum dipilih");
     return false;
   }
-  if((part_atr.val()) && (qty_atr.val())){
+  if((bahanbaku_atr.val()) && (qty_atr.val())){
     if(qty_atr.val() > 0){
-    var id_part = part_atr.val();
+    var id_bahanbaku = bahanbaku_atr.val();
     var qty = qty_atr.val();
     var supp = supplier_atr.val();
     //
@@ -16,7 +16,7 @@ $(document).on('click', ".addCart", function () {
         type: 'POST',
         dataType: 'JSON',
         data: {
-            id_part: id_part,
+            id_bahanbaku: id_bahanbaku,
             qty: qty,
             supp:supp,
         },
@@ -45,14 +45,14 @@ $(document).on('click', ".addCart", function () {
   }
 });
 
-function removecartitem(id,id_part)
+function removecartitem(id,id_bahanbaku)
 {
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
         data: {
             id: id,
-            id_part: id_part
+            id_bahanbaku: id_bahanbaku
         },
         url: window.location.origin + '/pengadaan/pengadaan/removeCart',
         success:  function(response){

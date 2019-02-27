@@ -1,23 +1,27 @@
 <?php
+Yii::import('application.modules.admin.models.*');
 
 /**
- * This is the model class for table "hb_part_level".
+ * This is the model class for table "el_bahanbaku_stock".
  *
- * The followings are the available columns in table 'hb_part_level':
- * @property integer $id_part_level
- * @property integer $part_level_desc
+ * The followings are the available columns in table 'el_bahanbaku_stock':
+ * @property integer $id_bahanbaku
+ * @property integer $init_stock
+ * @property integer $qty_in_hand
+ * @property string $last_update
+ * @property string $updated_by
  *
  * The followings are the available model relations:
- * @property Part[] $parts
+ * @property HbPart $idBahanbaku
  */
-class PartLevel extends CActiveRecord
+class BahanbakuStock extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'hb_part_level';
+		return 'el_bahanbaku_stock';
 	}
 
 	/**
@@ -28,11 +32,12 @@ class PartLevel extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('part_level_desc', 'required'),
-			array('part_level_desc', 'numerical', 'integerOnly'=>true),
+			array('id_bahanbaku, last_update, updated_by', 'required'),
+			array('id_bahanbaku, init_stock, qty_in_hand', 'numerical', 'integerOnly'=>true),
+			array('updated_by', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_part_level, part_level_desc', 'safe', 'on'=>'search'),
+			array('id_bahanbaku, init_stock, qty_in_hand, last_update, updated_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,7 +49,7 @@ class PartLevel extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'parts' => array(self::HAS_MANY, 'Part', 'id_part_level'),
+			'idBahanbaku' => array(self::BELONGS_TO, 'BahanBaku', 'id_bahanbaku'),
 		);
 	}
 
@@ -54,8 +59,11 @@ class PartLevel extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_part_level' => 'Id Part Level',
-			'part_level_desc' => 'Part Level Desc',
+			'id_bahanbaku' => 'Id Bahanbaku',
+			'init_stock' => 'Init Stock',
+			'qty_in_hand' => 'Qty In Hand',
+			'last_update' => 'Last Update',
+			'updated_by' => 'Updated By',
 		);
 	}
 
@@ -77,8 +85,11 @@ class PartLevel extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_part_level',$this->id_part_level);
-		$criteria->compare('part_level_desc',$this->part_level_desc);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
+		$criteria->compare('init_stock',$this->init_stock);
+		$criteria->compare('qty_in_hand',$this->qty_in_hand);
+		$criteria->compare('last_update',$this->last_update,true);
+		$criteria->compare('updated_by',$this->updated_by,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -89,7 +100,7 @@ class PartLevel extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PartLevel the static model class
+	 * @return BahanbakuStock the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

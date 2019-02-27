@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#part').change(function(){
+  $('#bahanbaku').change(function(){
     if(this.value){
       // console.log(this.value);
       var val = this.value;
@@ -7,7 +7,7 @@ $(document).ready(function(){
         type: 'POST',
         dataType: 'JSON',
         data: {
-            id_part: val,
+            id_bahanbaku: val,
         },
         url: window.location.origin + '/pengadaan/pengadaan/getPeramalan',
         beforeSend: function(){

@@ -29,18 +29,18 @@
 	</div>
 
     <div class="form-group">
-				<label class="control-label col-sm-2">Pilih Part</label>
+				<label class="control-label col-sm-2">Pilih Bahan Baku</label>
         <div class="col-sm-8">
-            <?php  echo CHtml::dropDownList('part', 'data_p',
-                $list_part,
+            <?php  echo CHtml::dropDownList('bahanbaku', 'data_p',
+                $list_bahanbaku,
                 array(
-									'prompt' => '(Pilih Part)',
+									'prompt' => '(Pilih Bahan Baku)',
                   'class' => 'form-control',
 									'ajax' => array(
 										'type' => 'POST',
 										'url' => Yii::app()->createUrl('pengadaan/pengadaan/getSupplier'),
 										'update' => '#supplier',
-										'data' =>['id_part'=>'js:this.value']
+										'data' =>['id_bahanbaku'=>'js:this.value']
 									)
                     )); ?>
         </div>
@@ -50,7 +50,7 @@
         <div class="col-sm-8">
             <?php  echo CHtml::dropDownList('supplier', 'data_s',[],
                 array(
-									'empty' => '(Pilih part dahulu)',
+									'empty' => '(Pilih Bahan Baku dahulu)',
                                 'class' => 'form-control'
                     )); ?>
         </div>
@@ -92,7 +92,7 @@
 					'summaryText' => false,
 					'columns' => array(
 						array(
-							'name' => 'Produk',
+							'name' => 'Bahan Baku',
 							'type' => 'raw',
 							'value' => 'CHtml::encode($data["nama"])'
 						),
@@ -128,7 +128,7 @@
                                   "id" => $data["id"],
                                   "onclick"=>"js:removecartitem(".
                                                                   $data["id"].",".
-                                                                  $data["id_part"].");",
+                                                                  $data["id_bahanbaku"].");",
                                   "class" => "btn btn-danger btn-xs",
                               )
                           );',

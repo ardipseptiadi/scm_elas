@@ -53,7 +53,7 @@ class PesananDetail extends CActiveRecord
 		// class name for the relations automatically generated below.
 		Yii::import('application.modules.admin.models.*');
 		return array(
-			'idProduk' => array(self::BELONGS_TO,'Produk','id_produk')
+			'idProduk' => array(self::BELONGS_TO,'Produk','id_produk'),
 		);
 	}
 

@@ -65,7 +65,7 @@ class PengirimanController extends Controller
 			$mKiriman->tgl_kirim = $mPesanan->tgl_kirim;
 			$mKiriman->no_pengiriman = isset($_POST['no_kirim']) ?$_POST['no_kirim']:null;
 			$mKiriman->id_pesanan = $id;
-			$mKiriman->id_kendaraan = isset($_POST['listkendaraan'])?$_POST['listkendaraan']:null;
+			// $mKiriman->id_kendaraan = isset($_POST['listkendaraan'])?$_POST['listkendaraan']:null;
 			$mKiriman->tujuan = isset($_POST['tujuan']) ?$_POST['tujuan']:null;
 			$mKiriman->created_at = date('Y-m-d h:i:s');
 			$mKiriman->save();
@@ -77,8 +77,10 @@ class PengirimanController extends Controller
 		$no_pesanan = $mPesanan->no_order;
 		$no_kiriman = $this->generateNoPengiriman();
 
-		$kendaraan = KendaraanPerusahaan::model()->findAll(array('order' => 'no_polisi'));
-    $list_kendaraan = CHtml::listData($kendaraan,'id_kendaraan', 'no_polisi');
+		$ekspedisi = Ekspedisi::model()->findAll(['order'=>'nama']);
+		$list_ekspedisi = CHtml::listData($ekspedisi,'id_ekspedisi', 'nama');
+		// $kendaraan = KendaraanPerusahaan::model()->findAll(array('order' => 'no_polisi'));
+    // $list_kendaraan = CHtml::listData($kendaraan,'id_kendaraan', 'no_polisi');
 
 		Yii::app()->clientscript->scriptMap['jquery.js'] = false;
 		$this->renderPartial('_form_kirim',get_defined_vars(),false,true);

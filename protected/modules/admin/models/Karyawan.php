@@ -21,7 +21,7 @@ class Karyawan extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_karyawan';
+		return 'el_karyawan';
 	}
 
 	/**

@@ -17,7 +17,7 @@ class Provinsi extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_provinsi';
+		return 'el_provinsi';
 	}
 
 	/**

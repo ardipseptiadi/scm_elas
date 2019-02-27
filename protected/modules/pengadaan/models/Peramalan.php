@@ -1,5 +1,6 @@
 <?php
 Yii::import('application.modules.admin.models.*');
+Yii::import('application.modules.pengadaan.models.*');
 
 /**
  * This is the model class for table "el_peramalan".
@@ -8,12 +9,13 @@ Yii::import('application.modules.admin.models.*');
  * @property integer $id_peramalan
  * @property string $peramalan
  * @property double $hasil
- * @property integer $id_produk
+ * @property integer $id_bahanbaku
  */
 class Peramalan extends CActiveRecord
 {
 	public $bln_ramal;
 	public $bln_data;
+	public $id_produk;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -30,12 +32,12 @@ class Peramalan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_produk', 'numerical', 'integerOnly'=>true),
+			array('id_bahanbaku', 'numerical', 'integerOnly'=>true),
 			array('hasil', 'numerical'),
 			array('peramalan', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_peramalan, peramalan, hasil, id_produk', 'safe', 'on'=>'search'),
+			array('id_peramalan, peramalan, hasil, id_bahanbaku', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +49,7 @@ class Peramalan extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idProduk' => array(self::BELONGS_TO, 'Produk', 'id_produk'),
+			'idBahanBaku' => array(self::BELONGS_TO, 'BahanBaku', 'id_bahanbaku'),
 		);
 	}
 
@@ -60,7 +62,7 @@ class Peramalan extends CActiveRecord
 			'id_peramalan' => 'Id Peramalan',
 			'peramalan' => 'Peramalan',
 			'hasil' => 'Hasil',
-			'id_produk' => 'Produk',
+			'id_bahanbaku' => 'Bahan Baku',
 		);
 	}
 
@@ -85,7 +87,7 @@ class Peramalan extends CActiveRecord
 		$criteria->compare('id_peramalan',$this->id_peramalan);
 		$criteria->compare('peramalan',$this->peramalan,true);
 		$criteria->compare('hasil',$this->hasil);
-		$criteria->compare('id_produk',$this->id_produk);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -114,26 +116,34 @@ class Peramalan extends CActiveRecord
 		$criteria->compare('id_peramalan',$this->id_peramalan);
 		$criteria->compare('peramalan',$this->peramalan,true);
 		$criteria->compare('hasil',$this->hasil);
-		$criteria->compare('id_produk',$this->id_produk);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
-	public function getDataPesananBulan($date,$id)
+	public function getListBom($id_produk)
+	{
+		$data_bom = Bom::model()->findAllByAttributes(['id_produk'=>$id_produk]);
+		return CHtml::listData($data_bom,'id_bahanbaku', 'nama');
+	}
+
+	public function getDataPesananBulan($date,$id_bahanbaku)
 	{
 		$start = $date.'-01';
 	  $end = $date.'-31';
 		$query = "
-            SELECT SUM(psd.qty) AS sum_pesanan
-            FROM el_pesanan_detail psd
-            LEFT JOIN hb_pesanan psn ON psn.id_pesanan = psd.id_pesanan
+						select SUM(psd.qty*bom.jumlahdigunakan) as sum_bb
+						FROM el_pesanan_detail psd
+						LEFT JOIN el_pesanan psn ON psn.id_pesanan = psd.id_pesanan
+						RIGHT JOIN el_bom bom ON bom.id_produk = psd.id_produk
             WHERE psn.tgl_pesan BETWEEN '".$start."' AND '".$end."'
-            AND psd.id_produk = '{$id}'
+            AND bom.id_bahanbaku = '{$id_bahanbaku}'
               ";
 		$command = Yii::app()->db->createCommand($query);
 		$data = $command->queryRow();
-		return $data['sum_pesanan'];
+
+		return $data['sum_bb'];
 	}
 }

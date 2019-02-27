@@ -84,8 +84,10 @@ class PengirimanController extends Controller
 		$tujuan = $mPelanggan->alamat;
 		$jarak = $mPelanggan->jarak;
 
-		$kendaraan = KendaraanPerusahaan::model()->findAll(array('order' => 'no_polisi'));
-    $list_kendaraan = CHtml::listData($kendaraan,'id_kendaraan', 'no_polisi');
+		$ekspedisi = Ekspedisi::model()->findAll(['order'=>'nama']);
+		$list_ekspedisi = CHtml::listData($ekspedisi,'id_ekspedisi', 'nama');
+		// $kendaraan = KendaraanPerusahaan::model()->findAll(array('order' => 'no_polisi'));
+    // $list_kendaraan = CHtml::listData($kendaraan,'id_kendaraan', 'no_polisi');
 
 		Yii::app()->clientscript->scriptMap['jquery.js'] = false;
 		$this->renderPartial('_form_kirim',get_defined_vars(),false,true);

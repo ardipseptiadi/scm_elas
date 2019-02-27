@@ -15,7 +15,7 @@ class JenisBayar extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_jenis_bayar';
+		return 'el_jenis_bayar';
 	}
 
 	/**

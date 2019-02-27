@@ -21,7 +21,7 @@ class Pengadaan extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pengadaan';
+		return 'el_pengadaan';
 	}
 
 	/**
@@ -38,7 +38,7 @@ class Pengadaan extends CActiveRecord
 			array('created_at', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_pengadaan, no_pengadaan, tgl_pengadaan, id_part, jumlah, total_harga, is_verifikasi, status, created_at', 'safe', 'on'=>'search'),
+			array('id_pengadaan, no_pengadaan, tgl_pengadaan, id_bahanbaku, jumlah, total_harga, is_verifikasi, status, created_at', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -18,11 +18,11 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="control-label col-sm-2">Kendaraan</label>
+    <label class="control-label col-sm-2">Ekspedisi</label>
     <div class="col-sm-6">
-      <?php echo CHtml::dropDownList('listkendaraan', '',
-                  $list_kendaraan,
-                  array('empty' => '--Pilih Kendaraan--')); ?>
+      <?php echo CHtml::dropDownList('listekspedisi', '',
+                  $list_ekspedisi,
+                  array('empty' => '--Pilih Ekspedisi--')); ?>
     </div>
   </div>
   <div class="form-group">

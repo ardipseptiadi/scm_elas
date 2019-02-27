@@ -26,7 +26,7 @@ class Pesanan extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pesanan';
+		return 'el_pesanan';
 	}
 
 	/**

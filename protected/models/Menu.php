@@ -23,7 +23,7 @@ class Menu extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_menu';
+		return 'el_menu';
 	}
 
 	/**

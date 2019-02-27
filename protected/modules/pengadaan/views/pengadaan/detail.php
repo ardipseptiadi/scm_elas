@@ -17,13 +17,13 @@
 				'dataProvider'=>$dataProvider,
                 'columns'=>array(
                     array(
-                        'header'=>'Part',
-                        'value'=>'$data->idPart->nama_part'
+                        'header'=>'Bahan Baku',
+                        'value'=>'$data->idBahanBaku->nama'
                     ),
                     'qty_pengadaan',
                     array(
                         'header'=>'Supplier',
-                        'value'=>'$data->idPartSupplier->idSupplier->nama'
+                        'value'=>'$data->idSupplierBahanBaku->idSupplier->nama'
                     ),
                 )
 			));

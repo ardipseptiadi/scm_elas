@@ -19,7 +19,7 @@ class Pelanggan extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pelanggan';
+		return 'el_pelanggan';
 	}
 
 	/**

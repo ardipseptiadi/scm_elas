@@ -1,26 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "hb_kendaraan_perusahaan".
+ * This is the model class for table "el_ekspedisi".
  *
- * The followings are the available columns in table 'hb_kendaraan_perusahaan':
- * @property integer $id_kendaraan
- * @property integer $id_jenis_kendaraan
- * @property integer $id_petugas
- * @property string $no_polisi
- * @property integer $status
- *
- * The followings are the available model relations:
- * @property JenisKendaraanPerusahaan $idJenisKendaraan
+ * The followings are the available columns in table 'el_ekspedisi':
+ * @property integer $id_ekspedisi
+ * @property string $nama
  */
-class KendaraanPerusahaan extends CActiveRecord
+class Ekspedisi extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'hb_kendaraan_perusahaan';
+		return 'el_ekspedisi';
 	}
 
 	/**
@@ -31,12 +25,11 @@ class KendaraanPerusahaan extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_jenis_kendaraan, id_petugas, no_polisi, status', 'required'),
-			array('id_jenis_kendaraan, id_petugas, status', 'numerical', 'integerOnly'=>true),
-			array('no_polisi', 'length', 'max'=>11),
+			array('nama', 'required'),
+			array('nama', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_kendaraan, id_jenis_kendaraan, id_petugas, no_polisi, status', 'safe', 'on'=>'search'),
+			array('id_ekspedisi, nama', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +41,6 @@ class KendaraanPerusahaan extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idJenisKendaraan' => array(self::BELONGS_TO, 'JenisKendaraanPerusahaan', 'id_jenis_kendaraan'),
-			'idPetugas' => array(self::BELONGS_TO, 'Petugas', 'id_petugas'),
 		);
 	}
 
@@ -59,11 +50,8 @@ class KendaraanPerusahaan extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_kendaraan' => 'Id Kendaraan',
-			'id_jenis_kendaraan' => 'Jenis Kendaraan',
-			'id_petugas' => 'Petugas',
-			'no_polisi' => 'No Polisi',
-			'status' => 'Status',
+			'id_ekspedisi' => 'Id Ekspedisi',
+			'nama' => 'Nama',
 		);
 	}
 
@@ -85,11 +73,8 @@ class KendaraanPerusahaan extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_kendaraan',$this->id_kendaraan);
-		$criteria->compare('id_jenis_kendaraan',$this->id_jenis_kendaraan);
-		$criteria->compare('id_petugas',$this->id_petugas);
-		$criteria->compare('no_polisi',$this->no_polisi,true);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('id_ekspedisi',$this->id_ekspedisi);
+		$criteria->compare('nama',$this->nama,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -100,7 +85,7 @@ class KendaraanPerusahaan extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return KendaraanPerusahaan the static model class
+	 * @return Ekspedisi the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

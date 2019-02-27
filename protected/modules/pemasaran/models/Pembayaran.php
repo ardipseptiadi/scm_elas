@@ -18,7 +18,7 @@ class Pembayaran extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pembayaran';
+		return 'el_pembayaran';
 	}
 
 	/**

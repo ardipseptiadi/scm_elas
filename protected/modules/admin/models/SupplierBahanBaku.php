@@ -1,25 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "hb_supplier_part".
+ * This is the model class for table "el_supplier_bahanbaku".
  *
- * The followings are the available columns in table 'hb_supplier_part':
- * @property integer $id_supplier_part
+ * The followings are the available columns in table 'el_supplier_bahanbaku':
+ * @property integer $id_supplier_bahanbaku
  * @property integer $id_supplier
- * @property integer $id_part
+ * @property integer $id_bahanbaku
  */
-class SupplierPart extends CActiveRecord
+class SupplierBahanBaku extends CActiveRecord
 {
-	public $nama;
-	public $alamat;
-	public $kode_bank;
-	public $no_telpon;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'hb_supplier_part';
+		return 'el_supplier_bahanbaku';
 	}
 
 	/**
@@ -30,11 +26,11 @@ class SupplierPart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_supplier, id_part', 'required'),
-			array('id_supplier, id_part', 'numerical', 'integerOnly'=>true),
+			array('id_supplier, id_bahanbaku', 'required'),
+			array('id_supplier, id_bahanbaku', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_supplier_part, id_supplier, id_part,nama,alamat,kode_bank', 'safe', 'on'=>'search'),
+			array('id_supplier_bahanbaku, id_supplier, id_bahanbaku', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +43,6 @@ class SupplierPart extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idSupplier' => array(self::BELONGS_TO, 'Supplier', 'id_supplier'),
-			'idPart' => array(self::BELONGS_TO, 'Part', 'id_part'),
 		);
 	}
 
@@ -57,9 +52,9 @@ class SupplierPart extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_supplier_part' => 'Id Supplier Part',
+			'id_supplier_bahanbaku' => 'Id Supplier Bahanbaku',
 			'id_supplier' => 'Id Supplier',
-			'id_part' => 'Id Part',
+			'id_bahanbaku' => 'Id Bahanbaku',
 		);
 	}
 
@@ -81,9 +76,9 @@ class SupplierPart extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_supplier_part',$this->id_supplier_part);
+		$criteria->compare('id_supplier_bahanbaku',$this->id_supplier_bahanbaku);
 		$criteria->compare('id_supplier',$this->id_supplier);
-		$criteria->compare('id_part',$this->id_part);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -94,7 +89,7 @@ class SupplierPart extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return SupplierPart the static model class
+	 * @return SupplierBahanBaku the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

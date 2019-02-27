@@ -17,7 +17,7 @@ class Jabatan extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_jabatan';
+		return 'el_jabatan';
 	}
 
 	/**

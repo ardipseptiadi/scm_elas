@@ -17,7 +17,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_user';
+		return 'el_user';
 	}
 
 	/**

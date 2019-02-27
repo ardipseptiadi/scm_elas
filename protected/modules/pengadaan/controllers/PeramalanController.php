@@ -13,13 +13,15 @@ class PeramalanController extends Controller
 
 	public function actionCreate()
 	{
+		// $cek = Peramalan::model()->getDataPesananBulan('2019-01',1);
+		// return $cek;
 		$model = new Peramalan;
 
 		if(isset($_POST['Peramalan'])){
 			$post = $_POST['Peramalan'];
 			$bln_ramal = $post['bln_ramal'];
 			$bln_data = $post['bln_data'];
-			$id_produk = $post['id_produk'];
+			$id_bahanbaku = $post['id_bahanbaku'];
 
 			$bulanramal = '01-'.$bln_ramal;
 			$daten = new DateTime($bulanramal);
@@ -32,7 +34,7 @@ class PeramalanController extends Controller
 				$this->redirect(['index']);
 			}
 			foreach ($listbulan as $value) {
-			  $get_data = Peramalan::model()->getDataPesananBulan($value,$id_produk);
+			  $get_data = Peramalan::model()->getDataPesananBulan($value,$id_bahanbaku);
 			  if($get_data){
 			    $data_pesanan[] = (int)$get_data;
 			  }else{
@@ -45,14 +47,15 @@ class PeramalanController extends Controller
 				$mPeramalan->peramalan = $bln_ramal;
 				$mPeramalan->data_mulai = $bln_data;
 				$mPeramalan->hasil = $peramalan;
-				$mPeramalan->id_produk = $id_produk;
+				$mPeramalan->id_bahanbaku = $id_bahanbaku;
 			  if($mPeramalan->save()){
 			    $this->redirect(['index']);
 			  }
 			}
+				$this->redirect(['index']);
 		}
-		$produk = Produk::model()->findAll(array('order' => 'nama'));
-    $list_produk = CHtml::listData($produk,'id_produk', 'nama');
+		$produk = BahanBaku::model()->findAll(array('order' => 'nama'));
+    $list_produk = CHtml::listData($produk,'id_bahanbaku', 'nama');
 
 		$this->render('create',get_defined_vars());
 	}
@@ -111,7 +114,7 @@ class PeramalanController extends Controller
 		$numForecasts = 1;
 	  foreach($alpha as $key => $value)
 	  {
-
+			$mse=[];
 	    for($k = 1;$k<count($data);$k++)
 	    {
 	      $temp = $data[$k] - $this->singleExpo($data,$value,$numForecasts)[$k];
@@ -139,8 +142,10 @@ class PeramalanController extends Controller
 		if(count($listbulan) == 1){
 			$this->redirect(['index']);
 		}
+
+
 		foreach ($listbulan as $value) {
-			$get_data = Peramalan::model()->getDataPesananBulan($value,$mPeramalan->id_produk);
+			$get_data = Peramalan::model()->getDataPesananBulan($value,$mPeramalan->id_bahanbaku);
 			if($get_data){
 				$data_pesanan[] = (int)$get_data;
 			}else{
@@ -154,7 +159,6 @@ class PeramalanController extends Controller
 				$this->redirect(['index']);
 			}
 		}
-
 		$this->redirect(['index']);
 	}
 

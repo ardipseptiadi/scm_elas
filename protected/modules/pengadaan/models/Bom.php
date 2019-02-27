@@ -1,23 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "hb_part_brand".
+ * This is the model class for table "el_bom".
  *
- * The followings are the available columns in table 'hb_part_brand':
- * @property integer $id_part_brand
- * @property string $brand_name
- *
- * The followings are the available model relations:
- * @property Part[] $parts
+ * The followings are the available columns in table 'el_bom':
+ * @property integer $id_produk
+ * @property integer $id_bahanbaku
+ * @property double $jumlahdigunakan
  */
-class PartBrand extends CActiveRecord
+class Bom extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'hb_part_brand';
+		return 'el_bom';
 	}
 
 	/**
@@ -28,11 +26,12 @@ class PartBrand extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('brand_name', 'required'),
-			array('brand_name', 'length', 'max'=>50),
+			array('id_produk, id_bahanbaku, jumlahdigunakan', 'required'),
+			array('id_produk, id_bahanbaku', 'numerical', 'integerOnly'=>true),
+			array('jumlahdigunakan', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_part_brand, brand_name', 'safe', 'on'=>'search'),
+			array('id_produk, id_bahanbaku, jumlahdigunakan', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,7 +43,6 @@ class PartBrand extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'parts' => array(self::HAS_MANY, 'Part', 'id_brand'),
 		);
 	}
 
@@ -54,8 +52,9 @@ class PartBrand extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_part_brand' => 'Id Part Brand',
-			'brand_name' => 'Brand Name',
+			'id_produk' => 'Id Produk',
+			'id_bahanbaku' => 'Id Bahanbaku',
+			'jumlahdigunakan' => 'Jumlahdigunakan',
 		);
 	}
 
@@ -77,8 +76,9 @@ class PartBrand extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_part_brand',$this->id_part_brand);
-		$criteria->compare('brand_name',$this->brand_name,true);
+		$criteria->compare('id_produk',$this->id_produk);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
+		$criteria->compare('jumlahdigunakan',$this->jumlahdigunakan);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -89,7 +89,7 @@ class PartBrand extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PartBrand the static model class
+	 * @return Bom the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

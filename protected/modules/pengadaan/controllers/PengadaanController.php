@@ -25,8 +25,10 @@ class PengadaanController extends Controller
 	{
 		$model = new Pengadaan;
 		$model->no_pengadaan = $this->generateNoPengadaan();
-		$part = Part::model()->findAll(array('order' => 'nama_part'));
-    $list_part = CHtml::listData($part,'id_part', 'nama_part');
+		// $part = Part::model()->findAll(array('order' => 'nama_part'));
+    // $list_part = CHtml::listData($part,'id_part', 'nama_part');
+		$bahanbaku = BahanBaku::model()->findAll(array('order' => 'nama'));
+		$list_bahanbaku = CHtml::listData($bahanbaku,'id_bahanbaku', 'nama');
 
 		if(isset($_POST['Pengadaan']))
 		{
@@ -39,8 +41,8 @@ class PengadaanController extends Controller
 				foreach($data_detail as $detail){
 					$p_detail = new PengadaanDetail();
 					$p_detail->id_pengadaan = $model->getPrimaryKey();
-					$p_detail->id_part = $detail["id_part"];
-					$p_detail->id_part_supplier = (int) $detail['id_supplier_part'];
+					$p_detail->id_bahanbaku = $detail["id_bahanbaku"];
+					$p_detail->id_supplier_bahanbaku = (int) $detail['id_supplier_bahanbaku'];
 					$p_detail->qty_pengadaan = $detail["qty"];
 					$p_detail->created_at = date('Y-m-d h:i:s');
 					if(!$p_detail->save()){
@@ -66,8 +68,8 @@ class PengadaanController extends Controller
 	public function actionUbah($id)
 	{
 		$model = Pengadaan::model()->findByPk($id);
-		$part = Part::model()->findAll(array('order' => 'nama_part'));
-    $list_part = CHtml::listData($part,'id_part', 'nama_part');
+		$bahanbaku = BahanBaku::model()->findAll(array('order' => 'nama'));
+    $list_bahanbaku = CHtml::listData($bahanbaku,'id_bahanbaku', 'nama');
 
 		if(isset($_POST['Pengadaan'])){
 				$model->attributes = $_POST['Pengadaan'];
@@ -85,8 +87,8 @@ class PengadaanController extends Controller
 					foreach($data_detail as $detail){
 						$p_detail = new PengadaanDetail();
 						$p_detail->id_pengadaan = $id;
-						$p_detail->id_part = $detail["id_part"];
-						$p_detail->id_part_supplier = $detail['id_supplier_part'];
+						$p_detail->id_bahanbaku = $detail["id_bahanbaku"];
+						$p_detail->id_supplier_bahanbaku = $detail['id_supplier_bahanbaku'];
 						$p_detail->qty_pengadaan = $detail["qty"];
 						$p_detail->created_at = date('Y-m-d h:i:s');
 						if(!$p_detail->save()){
@@ -107,13 +109,13 @@ class PengadaanController extends Controller
 			}else{
 				$id = count($data) +1;
 			}
-			$prd = Part::model()->findByPk($detail->id_part);
-			$mSupp = SupplierPart::model()->findByPk($detail->id_part_supplier);
+			$prd = BahanBaku::model()->findByPk($detail->id_bahanbaku);
+			$mSupp = SupplierBahanBaku::model()->findByPk($detail->id_supplier_bahanbaku);
 			$supplier = '';
 			if($mSupp){
 				$supplier = $mSupp->idSupplier->nama;
 			}
-			array_push($data,['id'=>$id,'id_part'=>$detail->id_part,'nama'=>$prd->nama_part,'qty'=>$detail->qty_pengadaan,'harga'=>$prd->harga,'id_supplier_part'=>$detail->id_part_supplier,'supplier'=>$supplier]);
+			array_push($data,['id'=>$id,'id_bahanbaku'=>$detail->id_bahanbaku,'nama'=>$prd->nama,'qty'=>$detail->qty_pengadaan,'harga'=>$prd->harga,'id_supplier_bahanbaku'=>$detail->id_supplier_bahanbaku,'supplier'=>$supplier]);
 		}
 		if(!isset(Yii::app()->session['cart'])){
 			Yii::app()->session['cart'] = $data;
@@ -140,18 +142,18 @@ class PengadaanController extends Controller
 
 	public function actionAddCart()
 	{
-		$id_part = Yii::app()->request->getPost('id_part');
+		$id_bahanbaku = Yii::app()->request->getPost('id_bahanbaku');
 		$qty = Yii::app()->request->getPost('qty');
 		$id_supp = Yii::app()->request->getPost('supp');
-		$mSupp = SupplierPart::model()->findByPk($id_supp);
+		$mSupp = SupplierBahanBaku::model()->findByPk($id_supp);
 		$supplier = '';
 		if($mSupp){
 			$supplier = $mSupp->idSupplier->nama;
 		}
 		$data = Yii::app()->session['cart'];
 		foreach ($data as $item) {
-			if($item["id_part"] == $id_part){
-				echo CJSON::encode(['responseText'=>'part telah dipilih','status'=>false]);
+			if($item["id_bahanbaku"] == $id_bahanbaku){
+				echo CJSON::encode(['responseText'=>'bahan baku telah dipilih','status'=>false]);
 				return false;exit;
 			}
 		}
@@ -160,10 +162,10 @@ class PengadaanController extends Controller
 		}else{
 			$id = count($data) +1;
 		}
-		$prd = Part::model()->findByPk($id_part);
-		$supp_prd = SupplierPart::model()->findAllByAttributes(['id_part'=>$id_part]);
-		$list_supp =  CJSON::encode(CHtml::listData($supp_prd,'id_supplier_part','idSupplier.nama'));
-		array_push($data,['id'=>$id,'id_part'=>$id_part,'nama'=>$prd->nama_part,'qty'=>$qty,'harga'=>$prd->harga,'id_supplier_part'=>$id_supp,'supplier'=>$supplier]);
+		$prd = BahanBaku::model()->findByPk($id_bahanbaku);
+		$supp_prd = SupplierBahanBaku::model()->findAllByAttributes(['id_bahanbaku'=>$id_bahanbaku]);
+		$list_supp =  CJSON::encode(CHtml::listData($supp_prd,'id_supplier_bahanbaku','idSupplier.nama'));
+		array_push($data,['id'=>$id,'id_bahanbaku'=>$id_bahanbaku,'nama'=>$prd->nama,'qty'=>$qty,'harga'=>$prd->harga,'id_supplier_bahanbaku'=>$id_supp,'supplier'=>$supplier]);
 		Yii::app()->session['cart'] = $data;
 		echo CJSON::encode(['responseText'=>'berhasil','status'=>true]);
 	}
@@ -171,7 +173,7 @@ class PengadaanController extends Controller
 	public function actionRemoveCart()
 	{
 		$id = Yii::app()->request->getPost('id');
-		$id_part = Yii::app()->request->getPost('id');
+		$id_bahanbaku = Yii::app()->request->getPost('id_bahanbaku');
 		$data = Yii::app()->session['cart'];
 		unset($data[($id-1)]);
 		Yii::app()->session['cart'] = $data;
@@ -179,9 +181,9 @@ class PengadaanController extends Controller
 
 	public function actionGetPeramalan()
 	{
-		$id_part = $_POST['id_part'];
+		$id_bahanbaku = $_POST['id_bahanbaku'];
 		$criteria = new CDbCriteria;
-		$criteria->condition = "id_part = '$id_part' ";
+		$criteria->condition = "id_bahanbaku = '$id_bahanbaku' ";
 		$criteria->order = "peramalan";
 		// $peramalan = Peramalan::model()->findByAttributes(['id_part'=>$id_part]);
 		$peramalan = Peramalan::model()->find($criteria);
@@ -220,12 +222,12 @@ class PengadaanController extends Controller
 
 	public function actionGetSupplier()
 	{
-		$id_part = Yii::app()->request->getPost('id_part');
-		$mSupp = SupplierPart::model()->findAllByAttributes(['id_part'=>$id_part]);
+		$id_bahanbaku = Yii::app()->request->getPost('id_bahanbaku');
+		$mSupp = SupplierBahanBaku::model()->findAllByAttributes(['id_bahanbaku'=>$id_bahanbaku]);
 
-		$data=SupplierPart::model()->findAll('id_part=:id_part',
-   array(':id_part'=>(int) $_POST['id_part']));
-		$data = CHtml::listData($mSupp,'id_supplier_part','idSupplier.nama');
+		// $data=SupplierPart::model()->findAll('id_bahanbaku=:id_bahanbaku',
+   // array(':id_bahanbaku'=>(int) $_POST['id_bahanbaku']));
+		$data = CHtml::listData($mSupp,'id_supplier_bahanbaku','idSupplier.nama');
 
 		if(count($data)>0){
 			echo "<option value=''>(Pilih Supplier)</option>";

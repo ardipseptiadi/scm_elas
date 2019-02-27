@@ -17,7 +17,7 @@ class Petugas extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_petugas';
+		return 'el_petugas';
 	}
 
 	/**

@@ -16,7 +16,7 @@ class GroupUser extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_group_user';
+		return 'el_group_user';
 	}
 
 	/**

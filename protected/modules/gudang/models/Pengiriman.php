@@ -22,7 +22,7 @@ class Pengiriman extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pengiriman';
+		return 'el_pengiriman';
 	}
 
 	/**

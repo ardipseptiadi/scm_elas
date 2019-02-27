@@ -105,7 +105,6 @@ $this->breadcrumbs=array(
 					'columns' => array(
 						'no_pengiriman',
 						'idPesanan.no_order',
-						'idKendaraan.no_polisi',
 						'tujuan',
 					)
 				));

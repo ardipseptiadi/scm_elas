@@ -17,8 +17,8 @@
 				'dataProvider'=>$dataProvider,
                 'columns'=>array(
                     array(
-                        'header'=>'Part',
-                        'value'=>'$data->idPart->nama_part'
+                        'header'=>'Produk',
+                        'value'=>'$data->idProduk->nama'
                     ),
                     'qty'
                 )

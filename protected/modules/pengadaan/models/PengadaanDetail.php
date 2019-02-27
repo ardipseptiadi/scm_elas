@@ -9,7 +9,7 @@ Yii::import('application.modules.gudang.models.*');
  * The followings are the available columns in table 'hb_pengadaan_detail':
  * @property integer $id_detail_pengadaaan
  * @property string $no_pengadaan
- * @property integer $id_part
+ * @property integer $id_bahanbaku
  * @property integer $qty_pengadaan
  * @property integer $status
  * @property integer $id_pengadaan
@@ -23,7 +23,7 @@ class PengadaanDetail extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'hb_pengadaan_detail';
+		return 'el_pengadaan_detail';
 	}
 
 	/**
@@ -34,13 +34,13 @@ class PengadaanDetail extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_part, id_pengadaan,id_part_supplier, created_at', 'required'),
-			array('id_part,id_part_supplier, qty_pengadaan, status, id_pengadaan', 'numerical', 'integerOnly'=>true),
+			array('id_bahanbaku, id_pengadaan,id_supplier_bahanbaku, created_at', 'required'),
+			array('id_bahanbaku,id_supplier_bahanbaku, qty_pengadaan, status, id_pengadaan', 'numerical', 'integerOnly'=>true),
 			array('harga_pengadaan', 'numerical'),
 			array('no_pengadaan', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_detail_pengadaaan, no_pengadaan, id_part,id_part_supplier, qty_pengadaan, status, id_pengadaan, harga_pengadaan, created_at', 'safe', 'on'=>'search'),
+			array('id_detail_pengadaaan, no_pengadaan, id_bahanbaku,id_supplier_bahanbaku, qty_pengadaan, status, id_pengadaan, harga_pengadaan, created_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,8 +52,8 @@ class PengadaanDetail extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idPart' => array(self::BELONGS_TO,'Part','id_part'),
-			'idPartSupplier' => array(self::BELONGS_TO,'SupplierPart','id_part_supplier')
+			'idBahanBaku' => array(self::BELONGS_TO,'BahanBaku','id_bahanbaku'),
+			'idSupplierBahanBaku' => array(self::BELONGS_TO,'SupplierBahanBaku','id_supplier_bahanbaku')
 		);
 	}
 
@@ -65,7 +65,7 @@ class PengadaanDetail extends CActiveRecord
 		return array(
 			'id_detail_pengadaaan' => 'Id Detail Pengadaaan',
 			'no_pengadaan' => 'No Pengadaan',
-			'id_part' => 'Id Part',
+			'id_bahanbaku' => 'Id Part',
 			'qty_pengadaan' => 'Qty Pengadaan',
 			'status' => 'Status',
 			'id_pengadaan' => 'Id Pengadaan',
@@ -94,7 +94,7 @@ class PengadaanDetail extends CActiveRecord
 
 		$criteria->compare('id_detail_pengadaaan',$this->id_detail_pengadaaan);
 		$criteria->compare('no_pengadaan',$this->no_pengadaan,true);
-		$criteria->compare('id_part',$this->id_part);
+		$criteria->compare('id_bahanbaku',$this->id_bahanbaku);
 		$criteria->compare('qty_pengadaan',$this->qty_pengadaan);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('id_pengadaan',$this->id_pengadaan);
@@ -120,21 +120,21 @@ class PengadaanDetail extends CActiveRecord
 	public function afterSave()
 	{
 		if($this->isNewRecord){
-			$mPartStock = PartStock::model()->findByPk($this->id_part);
+			$mBahanBakuStock = BahanbakuStock::model()->findByPk($this->id_bahanbaku);
 			$mRiwayat = new RiwayatPersediaan;
-			$mRiwayat->id_part = $this->id_part;
+			$mRiwayat->id_bahanbaku = $this->id_bahanbaku;
 			$mRiwayat->jumlah = $this->qty_pengadaan;
 			$mRiwayat->tgl_riwayat =date('Y-m-d');
 			$mRiwayat->created_at = date('Y-m-d h:i:s');
 			$mRiwayat->created_by = "pengadaan";
 			if($mRiwayat->save()){
-				$mPartStock->qty_in_hand = $mPartStock->qty_in_hand + $this->qty_pengadaan;
-				$mPartStock->last_update = date('Y-m-d h:i:s');
-				$mPartStock->updated_by = 'pengadaan';
-				if($mPartStock->update()){
+				$mBahanBakuStock->qty_in_hand = $mBahanBakuStock->qty_in_hand + $this->qty_pengadaan;
+				$mBahanBakuStock->last_update = date('Y-m-d h:i:s');
+				$mBahanBakuStock->updated_by = 'pengadaan';
+				if($mBahanBakuStock->update()){
 					return true;
 				}else{
-					var_dump($mPartStock->getErrors());exit;
+					var_dump($mBahanBakuStock->getErrors());exit;
 				}
 			}else{
 				var_dump($mRiwayat->getErrors());exit;

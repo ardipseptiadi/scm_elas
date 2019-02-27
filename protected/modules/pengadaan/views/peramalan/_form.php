@@ -29,11 +29,11 @@
 	</div>
 
   <div class="form-group">
-    <?php echo $form->labelEx($model,'id_produk',['class'=>'col-sm-5 control-label']); ?>
+    <?php echo $form->labelEx($model,'id_bahanbaku',['class'=>'col-sm-5 control-label']); ?>
     <div class="col-sm-4">
-      <?php echo $form->dropDownList($model,'id_produk',$list_produk,['empty'=>'Pilih']); ?>
+      <?php echo $form->dropDownList($model,'id_bahanbaku',$list_produk,['empty'=>'Pilih']); ?>
     </div>
-    <?php echo $form->error($model,'id_produk'); ?>
+    <?php echo $form->error($model,'id_bahanbaku'); ?>
   </div>
 
 	<div class="form-actions center">
